@@ -1,23 +1,28 @@
 var state = {
-	items:["apples", "oranges", "milk", "bread"]
+    items:[{"name":"apples", "toggle":false},
+            {"name":"oranges", "toggle":false},
+            {"name":"milk", "toggle":true},
+            {"name":"bread", "toggle":false}]
 };
 
 var addItem = function(state, item){
-    state.items.push(item);
+    state.items.push({"name":item, "toggle":false});
 };
 
 var removeItem = function(state, item){
-	var index = state.items.indexOf(item);
-	console.log(item + " : index: " + index);
-	if(index >-1){
-		state.items.splice(index, 1);
-	};
+    for(var i = 0; i<=state.items.length; i++){
+        var searchItem = state.items[i];
+        if(searchItem.name === item){
+            state.items.splice(i, 1);
+            return;
+        }
+    }
 };
 
 var renderList = function(state, element){
 	var itemsHTML = state.items.map(function(item){
 		return '<li>\
-        <span class="shopping-item">'+item+'</span>\
+        <span class="shopping-item">'+item.name+'</span>\
         <div class="shopping-item-controls">\
           <button class="shopping-item-toggle">\
             <span class="button-label">check</span>\
@@ -29,6 +34,17 @@ var renderList = function(state, element){
       </li>'
 	});
 	element.html(itemsHTML);	
+};
+
+var toggleItem = function(state, item){
+    for(var searchItem of state.items){
+        if(searchItem.name === item){
+            if(searchItem.toggle === true)
+                searchItem.toggle = false;
+            else
+                searchItem.toggle = true;
+        }
+    }
 };
 
 $('#js-shopping-list-form').submit(function(event){
