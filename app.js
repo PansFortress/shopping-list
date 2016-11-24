@@ -1,9 +1,9 @@
 var state = {
-	items:[]
+	items:["apples", "oranges", "milk", "bread"]
 };
 
 var addItem = function(state, item){
-	state.items.push(item);
+    state.items.push(item);
 };
 
 var removeItem = function(state, item){
@@ -40,7 +40,10 @@ $('#js-shopping-list-form').submit(function(event){
 });
 
 $('.shopping-list').on('click','.shopping-item-delete',(function(event){
-	removeItem(state, $('.shopping-item').text());
+	//This will return a collection of items and will return
+    //all of the .shopping-item spans
+    var shoppingItem = $(this).closest("li").find(".shopping-item").text();
+    removeItem(state, shoppingItem);
 	renderList(state, $('.shopping-list'));
 }));
 
