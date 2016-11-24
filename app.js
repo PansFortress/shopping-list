@@ -21,8 +21,15 @@ var removeItem = function(state, item){
 
 var renderList = function(state, element){
 	var itemsHTML = state.items.map(function(item){
+		console.log(item.name + " : " + item.toggle);
+		if(item.toggle){
+			var itemClass = "shopping-item shopping-item__checked";
+		}
+		else
+			var itemClass = "shopping-item"
+
 		return '<li>\
-        <span class="shopping-item">'+item.name+'</span>\
+        <span class="' + itemClass +'">'+item.name+'</span>\
         <div class="shopping-item-controls">\
           <button class="shopping-item-toggle">\
             <span class="button-label">check</span>\
@@ -63,6 +70,9 @@ $('.shopping-list').on('click','.shopping-item-delete',(function(event){
 	renderList(state, $('.shopping-list'));
 }));
 
-$('.shopping-list').on('click','shopping-item-toggle',(function(event){
-
+$('.shopping-list').on('click','.shopping-item-toggle',(function(event){
+	console.log("Here");
+	var itemToToggle = $(this).closest("li").find(".shopping-item").text();
+	toggleItem(state, itemToToggle);
+	renderList(state, $('.shopping-list'));
 }));
